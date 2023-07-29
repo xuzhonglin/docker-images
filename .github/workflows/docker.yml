@@ -1,8 +1,7 @@
 name: Docker
 
 on:
-  push:
-    branches: [master]
+  workflow_dispatch:
 
 jobs:
   docker:
@@ -10,11 +9,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - version: "latest"
+          - version: "1.0"
 
       fail-fast: false
 
-    name: Docker (dockette/vercel:${{ matrix.version }})
+    name: Docker (colinxu/vercel-cli:${{ matrix.version }})
 
     steps:
       - name: Checkout
@@ -24,7 +23,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -45,7 +44,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: dockette/vercel:${{ matrix.version }}
+          tags: |
+            colinxu/vercel-cli:latest
+            colinxu/vercel-cli:${{ matrix.version }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/amd64,linux/arm64
