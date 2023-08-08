@@ -13,7 +13,7 @@ jobs:
 
       fail-fast: false
 
-    name: Docker (colinxu/vercel-cli:${{ matrix.version }})
+    name: Docker (colinxu/tccli:${{ matrix.version }})
 
     steps:
       - name: Checkout
@@ -42,11 +42,11 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: tccli/.
           push: true
           tags: |
-            colinxu/vercel-cli:latest
-            colinxu/vercel-cli:${{ matrix.version }}
+            colinxu/tccli:latest
+            colinxu/tccli:${{ matrix.version }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/amd64,linux/arm64
