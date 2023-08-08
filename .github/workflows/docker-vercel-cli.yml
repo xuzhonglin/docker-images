@@ -1,4 +1,4 @@
-name: Docker
+name: Vercel CLI
 
 on:
   workflow_dispatch:

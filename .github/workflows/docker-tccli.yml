@@ -1,4 +1,4 @@
-name: Docker
+name: TCCLI
 
 on:
   workflow_dispatch:
